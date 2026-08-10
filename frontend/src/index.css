@@ -1,0 +1,422 @@
+/* ============================================================
+   עיצוב כללי — ממשק בעברית, כיוון מימין לשמאל
+   ============================================================ */
+
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --border: #e3e3df;
+  --text: #1f1f1d;
+  --muted: #6b6b66;
+  --accent: #b5502a;
+  --accent-soft: #f4e9e4;
+  --danger: #c0392b;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgb(0 0 0 / 6%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Heebo', 'Rubik', -apple-system, 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.3;
+  margin: 0 0 0.5rem;
+}
+
+/* ===================== פריסה ===================== */
+
+.main {
+  min-height: calc(100vh - 140px);
+}
+
+.page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+}
+
+.page--narrow {
+  max-width: 420px;
+}
+
+.page__header {
+  margin-bottom: 1.5rem;
+}
+
+.center {
+  text-align: center;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.dot {
+  margin: 0 0.5rem;
+  color: var(--border);
+}
+
+.hint {
+  margin: -0.5rem 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ===================== סרגל ניווט ===================== */
+
+.navbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.navbar__brand {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.navbar__brand:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navbar__user {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.badge {
+  margin-inline-start: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.75rem;
+}
+
+/* ===================== כפתורים ===================== */
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.88;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn--wide {
+  width: 100%;
+  padding: 0.65rem 1rem;
+}
+
+.btn--link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+
+.btn--danger {
+  color: var(--danger);
+}
+
+/* ===================== חיפוש ===================== */
+
+.search {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.search__input {
+  flex: 1;
+}
+
+/* ===================== שדות טופס ===================== */
+
+.input,
+.textarea,
+.search__input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.input:focus,
+.textarea:focus,
+.search__input:focus {
+  outline: 2px solid var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 1.5rem 0 1rem;
+}
+
+.form label {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.form .btn {
+  margin-top: 1rem;
+}
+
+/* ===================== כרטיס כתבה ===================== */
+
+.articles {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.4rem;
+}
+
+.card__title {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.card__title a {
+  color: var(--text);
+}
+
+.card__title a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.card__meta {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.card__excerpt {
+  margin: 0 0 0.75rem;
+}
+
+.card__more {
+  font-size: 0.9rem;
+}
+
+/* ===================== תגיות ===================== */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+}
+
+.tag {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.78rem;
+}
+
+/* ===================== עמוד כתבה ===================== */
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem;
+}
+
+.article__title {
+  font-size: 1.7rem;
+}
+
+.article__content p {
+  margin: 0 0 1rem;
+}
+
+/* ===================== תגובות ===================== */
+
+.comments {
+  margin-top: 2rem;
+}
+
+.comments__list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.comment {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+}
+
+.comment__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.comment__date,
+.comment__edited {
+  font-size: 0.8rem;
+}
+
+.comment__body {
+  margin: 0.4rem 0 0;
+}
+
+.comment__edit {
+  margin-top: 0.5rem;
+}
+
+.comment__actions {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 0.6rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+}
+
+.comment-form label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.comment-form .textarea {
+  width: 100%;
+}
+
+/* ===================== שגיאות ===================== */
+
+.error {
+  margin: 0.5rem 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #e6c3bd;
+  border-radius: var(--radius);
+  background: #fdf1ef;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.error--inline {
+  padding: 0.3rem 0;
+  border: none;
+  background: none;
+}
+
+/* ===================== כותרת תחתונה ===================== */
+
+.footer {
+  padding: 2rem 1.25rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}

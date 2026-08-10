@@ -1,0 +1,31 @@
+# ===== סודות =====
+.env
+*.pem
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+.venv/
+
+# ===== Django =====
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+
+# ===== React =====
+node_modules/
+/frontend/dist/
+/frontend/build/
+.npm
+
+# ===== עורכים ומערכת הפעלה =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
