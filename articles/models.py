@@ -47,6 +47,17 @@ class Article(models.Model):
         """מחזיר את התגיות כרשימה, ללא רווחים מיותרים וללא ערכים ריקים."""
         return [tag.strip() for tag in self.tags.split(',') if tag.strip()]
 
+    @property
+    def reading_time(self):
+        """
+        זמן קריאה משוער בדקות.
+
+        מבוסס על קצב של כ-200 מילים לדקה, עם מינימום של דקה אחת
+        כדי שכתבה קצרה לא תוצג כ"0 דקות קריאה".
+        """
+        words = len(self.content.split())
+        return max(1, round(words / 200))
+
 
 class Comment(models.Model):
     """תגובה של משתמש רשום על כתבה."""

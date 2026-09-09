@@ -3,6 +3,7 @@ import { useState } from 'react'
 import client, { readError } from '../api/client'
 import { useAuth } from '../context/AuthContext'
 import { formatDateTime } from '../utils/format'
+import Avatar from './Avatar'
 
 export default function CommentItem({ comment, onUpdated, onDeleted }) {
   const { user, isManager } = useAuth()
@@ -57,11 +58,16 @@ export default function CommentItem({ comment, onUpdated, onDeleted }) {
   return (
     <li className="comment">
       <div className="comment__head">
-        <strong>{comment.author.username}</strong>
-        <span className="comment__date">{formatDateTime(comment.created_at)}</span>
-        {comment.updated_at !== comment.created_at && (
-          <span className="comment__edited">(נערך)</span>
-        )}
+        <Avatar name={comment.author.username} size={32} />
+        <div>
+          <strong className="comment__author">{comment.author.username}</strong>
+          <div className="comment__date">
+            {formatDateTime(comment.created_at)}
+            {comment.updated_at !== comment.created_at && (
+              <span className="comment__edited"> · נערך</span>
+            )}
+          </div>
+        </div>
       </div>
 
       {isEditing ? (

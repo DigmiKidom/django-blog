@@ -15,8 +15,13 @@ class UserAdmin(BaseUserAdmin):
 
     list_display = ('username', 'email', 'get_groups', 'is_staff', 'date_joined')
     list_filter = ('groups', 'is_staff', 'is_superuser', 'is_active')
-    search_fields = ('username', 'email')
+    search_fields = ('username', 'email', 'bio')
     ordering = ('-date_joined',)
+
+    # מוסיף את שדה התיאור לטופס העריכה, לצד השדות הסטנדרטיים
+    fieldsets = BaseUserAdmin.fieldsets + (
+        ('פרופיל', {'fields': ('bio',)}),
+    )
 
     @admin.display(description='קבוצות')
     def get_groups(self, obj):

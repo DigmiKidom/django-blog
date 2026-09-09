@@ -21,8 +21,57 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'groups', 'date_joined')
+        fields = ('id', 'username', 'email', 'bio', 'groups', 'date_joined')
         read_only_fields = fields
+
+
+class MeSerializer(serializers.ModelSerializer):
+    """
+    הפרופיל של המשתמש המחובר.
+
+    ניתן לעדכן את האימייל ואת התיאור הקצר בלבד.
+    שם המשתמש והקבוצות אינם ניתנים לשינוי מכאן —
+    שינוי קבוצה הוא פעולת ניהול ומתבצע דרך ממשק הניהול.
+    """
+
+    groups = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='name',
+    )
+    articles_count = serializers.IntegerField(
+        source='articles.count',
+        read_only=True,
+        label='מספר הכתבות שכתב',
+    )
+    comments_count = serializers.IntegerField(
+        source='comments.count',
+        read_only=True,
+        label='מספר התגובות שכתב',
+    )
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'bio', 'groups',
+                  'articles_count', 'comments_count', 'date_joined')
+        read_only_fields = ('id', 'username', 'groups',
+                            'articles_count', 'comments_count', 'date_joined')
+        extra_kwargs = {
+            'email': {'help_text': 'כתובת אימייל ייחודית במערכת.'},
+            'bio': {'help_text': 'תיאור קצר, עד 300 תווים.'},
+        }
+
+    def validate_email(self, value):
+        """ייחודיות אימייל, תוך התעלמות מהמשתמש עצמו."""
+        exists = (
+            User.objects
+            .filter(email__iexact=value)
+            .exclude(pk=self.instance.pk)
+            .exists()
+        )
+        if exists:
+            raise serializers.ValidationError('כתובת אימייל זו כבר רשומה במערכת.')
+        return value.lower()
 
 
 class RegisterSerializer(serializers.ModelSerializer):

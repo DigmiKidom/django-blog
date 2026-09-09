@@ -3,7 +3,12 @@
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
-from .views import ArticleCommentsView, ArticleViewSet, CommentDetailView
+from .views import (
+    ArticleCommentsView,
+    ArticleViewSet,
+    CommentDetailView,
+    RecentCommentsView,
+)
 
 router = SimpleRouter()
 router.register('articles', ArticleViewSet, basename='article')
@@ -16,6 +21,15 @@ urlpatterns = [
         'articles/<int:article_id>/comments/',
         ArticleCommentsView.as_view(),
         name='article-comments',
+    ),
+
+    # התגובות האחרונות בבלוג.
+    # חייב להופיע לפני comments/<int:pk>/ כדי ש-"recent"
+    # לא ייקלט בטעות כמזהה מספרי.
+    path(
+        'comments/recent/',
+        RecentCommentsView.as_view(),
+        name='recent-comments',
     ),
 
     # תגובה בודדת — עריכה ומחיקה

@@ -141,8 +141,12 @@ hackeru-finalproject/
 | POST | `/api/register/` | פתוח |
 | POST | `/api/token/` | פתוח |
 | POST | `/api/token/refresh/` | פתוח |
+| GET/PATCH | `/api/users/me/` | מחובר |
 | GET | `/api/articles/` | פתוח |
 | GET | `/api/articles/?search=<q>` | פתוח |
+| GET | `/api/articles/tags/` | פתוח |
+| GET | `/api/articles/stats/` | פתוח |
+| GET | `/api/comments/recent/` | פתוח |
 | POST | `/api/articles/` | editors, managers |
 | GET | `/api/articles/<id>/` | פתוח |
 | PUT/PATCH | `/api/articles/<id>/` | מחבר או manager |

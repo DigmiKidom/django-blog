@@ -29,12 +29,18 @@ User = get_user_model()
 DEMO_PASSWORD = 'Demo!Pass2026'
 
 USERS = [
-    ('boss',    'boss@blog.local',    'managers'),
-    ('editor1', 'editor1@blog.local', 'editors'),
-    ('editor2', 'editor2@blog.local', 'editors'),
-    ('dana',    'dana@blog.local',    'users'),
-    ('yossi',   'yossi@blog.local',   'users'),
-    ('maya',    'maya@blog.local',    'users'),
+    ('boss', 'boss@blog.local', 'managers',
+     'מנהל האתר. אחראי על התוכן ועל הקהילה.'),
+    ('editor1', 'editor1@blog.local', 'editors',
+     'כותב על כסף, הרגלים וכל מה שקורה במטבח ובמרפסת.'),
+    ('editor2', 'editor2@blog.local', 'editors',
+     'מטייל, מצלם ואוסף משחקי קופסה. כותב כאן בעיקר על סופי שבוע.'),
+    ('dana', 'dana@blog.local', 'users',
+     'קוראת קבועה. אוהבת טיולים קצרים בלי תכנון.'),
+    ('yossi', 'yossi@blog.local', 'users',
+     'מנסה כל טיפ שמופיע כאן, בערך חצי מהם עובדים.'),
+    ('maya', 'maya@blog.local', 'users',
+     ''),
 ]
 
 ARTICLES = [
@@ -162,11 +168,12 @@ class Command(BaseCommand):
 
         # --- משתמשים ---
         users = {}
-        for username, email, group_name in USERS:
+        for username, email, group_name, bio in USERS:
             user = User.objects.create_user(
                 username=username,
                 email=email,
                 password=DEMO_PASSWORD,
+                bio=bio,
             )
             user.groups.add(groups[group_name])
 
@@ -233,5 +240,5 @@ class Command(BaseCommand):
         self.stdout.write('משתמשי הדמו (סיסמה זהה לכולם):')
         self.stdout.write(f'  סיסמה: {DEMO_PASSWORD}')
         self.stdout.write('')
-        for username, _, group_name in USERS:
+        for username, _, group_name, _bio in USERS:
             self.stdout.write(f'  {username:<10} {group_name}')

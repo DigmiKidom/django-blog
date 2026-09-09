@@ -24,6 +24,18 @@
 | 14 | 3 כתבות אחרונות + טעינת ישנות + חיפוש | `pages/Home.jsx` | ✅ |
 | 15 | עמוד כתבה + תגובות + עריכה/מחיקה לבעלים | `pages/ArticleDetail.jsx` | ✅ |
 
+### תוספות מעבר לדרישות
+
+| תוספת | היכן |
+|---|---|
+| עמוד פרופיל אישי עם עריכה | `GET/PATCH /api/users/me/`, `pages/Profile.jsx` |
+| סינון מדויק לפי תגית, מחבר ותאריך | `articles/filters.py` |
+| אווטרים, מצבי טעינה ואנימציות | `components/Avatar.jsx`, `index.css` |
+| פריסת מגזין: כתבה ראשית, רשת וסרגל צד | `pages/Home.jsx`, `components/HeroArticle.jsx`, `Sidebar.jsx` |
+| שורת תגיות לסינון מהיר | `components/TagBar.jsx` + `GET /api/articles/tags/` |
+| זמן קריאה משוער ופס התקדמות | `Article.reading_time`, `components/ReadingProgress.jsx` |
+| תגובות אחרונות וסיכום מספרי | `GET /api/comments/recent/`, `GET /api/articles/stats/` |
+
 ---
 
 ## 2. הרצת המערכת

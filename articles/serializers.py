@@ -23,6 +23,29 @@ class CommentSerializer(serializers.ModelSerializer):
                             'created_at', 'updated_at')
 
 
+class RecentCommentSerializer(serializers.ModelSerializer):
+    """
+    תגובה אחרונה לתצוגה בסרגל הצד.
+
+    כוללת את כותרת הכתבה ואת המזהה שלה, כדי לאפשר קישור ישיר
+    בלי בקשה נוספת לשרת.
+    """
+
+    author_name = serializers.CharField(source='author.username', read_only=True)
+    article_title = serializers.CharField(source='article.title', read_only=True)
+    excerpt = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'article', 'article_title', 'author_name',
+                  'excerpt', 'created_at')
+
+    def get_excerpt(self, obj):
+        if len(obj.content) <= 90:
+            return obj.content
+        return obj.content[:90].rstrip() + '…'
+
+
 class ArticleListSerializer(serializers.ModelSerializer):
     """
     כתבה בתצוגת רשימה.
@@ -34,13 +57,14 @@ class ArticleListSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     tag_list = serializers.SerializerMethodField()
     excerpt = serializers.SerializerMethodField()
+    reading_time = serializers.IntegerField(read_only=True)
 
     # מגיע מ-annotate בשאילתה של ה-ViewSet, ולא מספירה נפרדת לכל כתבה.
     comments_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Article
-        fields = ('id', 'title', 'excerpt', 'tags', 'tag_list',
+        fields = ('id', 'title', 'excerpt', 'tags', 'tag_list', 'reading_time',
                   'author', 'comments_count', 'published_at')
 
     def get_tag_list(self, obj):
@@ -63,11 +87,12 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
 
     author = UserSerializer(read_only=True)
     tag_list = serializers.SerializerMethodField()
+    reading_time = serializers.IntegerField(read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Article
-        fields = ('id', 'title', 'content', 'tags', 'tag_list',
+        fields = ('id', 'title', 'content', 'tags', 'tag_list', 'reading_time',
                   'author', 'comments', 'published_at', 'updated_at')
         read_only_fields = ('id', 'author', 'published_at', 'updated_at')
 

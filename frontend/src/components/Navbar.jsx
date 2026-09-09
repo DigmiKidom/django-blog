@@ -1,6 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../context/AuthContext'
+import Avatar from './Avatar'
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth()
@@ -15,18 +16,24 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar__inner">
         <Link to="/" className="navbar__brand">
+          <span className="navbar__dot" />
           הבלוג
         </Link>
 
         <nav className="navbar__links">
           {isAuthenticated ? (
             <>
-              <span className="navbar__user">
-                שלום, <strong>{user.username}</strong>
-                {user.groups?.length > 0 && (
-                  <span className="badge">{user.groups.join(', ')}</span>
-                )}
-              </span>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  `navbar__profile${isActive ? ' navbar__profile--active' : ''}`
+                }
+                title="הפרופיל שלי"
+              >
+                <Avatar name={user.username} size={30} />
+                <span className="navbar__username">{user.username}</span>
+              </NavLink>
+
               <button type="button" className="btn btn--ghost" onClick={handleLogout}>
                 התנתקות
               </button>

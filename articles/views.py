@@ -1,7 +1,12 @@
+from collections import Counter
+
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from accounts.permissions import ArticlePermission, CommentPermission
 
@@ -11,6 +16,7 @@ from .serializers import (
     ArticleDetailSerializer,
     ArticleListSerializer,
     CommentSerializer,
+    RecentCommentSerializer,
 )
 
 
@@ -68,6 +74,33 @@ class ArticleViewSet(viewsets.ModelViewSet):
         # המחבר נקבע בשרת בלבד — לעולם לא מגוף הבקשה
         serializer.save(author=self.request.user)
 
+    @action(detail=False, methods=['get'], permission_classes=[AllowAny])
+    def tags(self, request):
+        """
+        רשימת כל התגיות במערכת עם מספר הכתבות בכל אחת,
+        ממוינת מהנפוצה לנדירה.
+
+        משמשת את שורת הסינון בעמוד הראשי. כל תגית ניתנת לשילוב
+        עם `/api/articles/?tag=<name>`.
+        """
+        counter = Counter()
+        for tags in Article.objects.values_list('tags', flat=True):
+            counter.update(t.strip() for t in tags.split(',') if t.strip())
+
+        return Response([
+            {'name': name, 'count': count}
+            for name, count in counter.most_common()
+        ])
+
+    @action(detail=False, methods=['get'], permission_classes=[AllowAny])
+    def stats(self, request):
+        """סיכום מספרי של הבלוג — כתבות, תגובות ומספר הכותבים."""
+        return Response({
+            'articles': Article.objects.count(),
+            'comments': Comment.objects.count(),
+            'authors': Article.objects.values('author').distinct().count(),
+        })
+
 
 class ArticleCommentsView(generics.ListCreateAPIView):
     """
@@ -94,6 +127,25 @@ class ArticleCommentsView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, article=self.get_article())
+
+
+class RecentCommentsView(generics.ListAPIView):
+    """
+    חמש התגובות האחרונות בבלוג, מכל הכתבות.
+
+    פתוח לכולם. משמש את סרגל הצד בעמוד הראשי.
+    """
+
+    serializer_class = RecentCommentSerializer
+    permission_classes = [AllowAny]
+    pagination_class = None
+
+    def get_queryset(self):
+        return (
+            Comment.objects
+            .select_related('author', 'article')
+            .order_by('-created_at')[:5]
+        )
 
 
 class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):

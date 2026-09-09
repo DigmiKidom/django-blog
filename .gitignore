@@ -23,6 +23,7 @@ node_modules/
 /frontend/dist/
 /frontend/build/
 .npm
+vite.config.js.timestamp-*
 
 # ===== עורכים ומערכת הפעלה =====
 .vscode/

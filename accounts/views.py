@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import User
 from .serializers import (
     CustomTokenObtainPairSerializer,
+    MeSerializer,
     RegisterSerializer,
     UserSerializer,
 )
@@ -47,3 +48,25 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     """
 
     serializer_class = CustomTokenObtainPairSerializer
+
+
+class MeView(generics.RetrieveUpdateAPIView):
+    """
+    הפרופיל של המשתמש המחובר.
+
+    **GET** — פרטי המשתמש, הקבוצות שלו ומספר הכתבות והתגובות שכתב.
+
+    **PATCH** — עדכון האימייל והתיאור הקצר.
+    שם המשתמש והקבוצות אינם ניתנים לשינוי מכאן.
+
+    נדרשת כותרת `Authorization: Bearer <access>`.
+    """
+
+    serializer_class = MeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ['get', 'patch', 'head', 'options']
+
+    def get_object(self):
+        # תמיד המשתמש המחובר — אין כאן מזהה בכתובת,
+        # ולכן אי אפשר לגשת לפרופיל של מישהו אחר.
+        return self.request.user

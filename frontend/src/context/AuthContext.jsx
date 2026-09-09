@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import client, { tokenStore } from '../api/client'
+import client, { STORAGE_KEYS, tokenStore } from '../api/client'
 
 const AuthContext = createContext(null)
 
@@ -36,6 +36,15 @@ export function AuthProvider({ children }) {
     [login],
   )
 
+  /** מסנכרן את המשתמש השמור אחרי עדכון פרופיל. */
+  const syncUser = useCallback((updated) => {
+    setUser((current) => {
+      const merged = { ...current, ...updated }
+      localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(merged))
+      return merged
+    })
+  }, [])
+
   const value = useMemo(
     () => ({
       user,
@@ -44,8 +53,9 @@ export function AuthProvider({ children }) {
       login,
       register,
       logout,
+      syncUser,
     }),
-    [user, login, register, logout],
+    [user, login, register, logout, syncUser],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

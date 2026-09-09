@@ -35,6 +35,11 @@ def api_root(request, format=None):
             'method': 'POST',
             'description': 'קבלת access חדש באמצעות refresh token.',
         },
+        'הפרופיל שלי': {
+            'url': reverse('me', request=request, format=format),
+            'methods': 'GET, PATCH',
+            'description': 'פרטי המשתמש המחובר ועדכון האימייל והתיאור.',
+        },
         'כתבות': {
             'url': reverse('article-list', request=request, format=format),
             'methods': 'GET, POST',
@@ -58,5 +63,20 @@ def api_root(request, format=None):
             'url': request.build_absolute_uri('/api/comments/<id>/'),
             'methods': 'GET, PATCH, DELETE',
             'description': 'עריכה לכותב התגובה בלבד; מחיקה לכותב או למנהל.',
+        },
+        'תגיות': {
+            'url': reverse('article-tags', request=request, format=format),
+            'methods': 'GET',
+            'description': 'כל התגיות עם מספר הכתבות בכל אחת.',
+        },
+        'סיכום מספרי': {
+            'url': reverse('article-stats', request=request, format=format),
+            'methods': 'GET',
+            'description': 'מספר הכתבות, התגובות והכותבים בבלוג.',
+        },
+        'תגובות אחרונות': {
+            'url': reverse('recent-comments', request=request, format=format),
+            'methods': 'GET',
+            'description': 'חמש התגובות האחרונות מכל הכתבות.',
         },
     })

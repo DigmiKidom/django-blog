@@ -17,6 +17,11 @@ class User(AbstractUser):
         unique=True,
         help_text='כתובת אימייל ייחודית במערכת.',
     )
+    bio = models.TextField(
+        blank=True,
+        max_length=300,
+        help_text='תיאור קצר על המשתמש, עד 300 תווים.',
+    )
 
     class Meta:
         verbose_name = 'משתמש'
