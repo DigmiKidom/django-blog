@@ -58,7 +58,7 @@ psql -l | grep blog_db
 הסביבה הקיימת נבנתה עם Python 3.9 ולכן יש למחוק אותה:
 
 ```bash
-cd ~/Desktop/Projects/hackeru-finalproject
+cd ~/django-blog
 deactivate 2>/dev/null
 rm -rf venv
 
@@ -109,7 +109,7 @@ python manage.py runserver
 |---|---|
 | `command not found: createdb` | ה-PATH לא עודכן. פתח טרמינל חדש או הרץ `source ~/.zshrc` |
 | `could not connect to server` | השרת לא רץ. הרץ `brew services start postgresql@16` |
-| `role "omridigmi" does not exist` | הרץ `createuser -s omridigmi` |
+| `role "<username>" does not exist` | הרץ `createuser -s $(whoami)` |
 | `database "blog_db" does not exist` | הרץ `createdb blog_db` |
 | `No module named 'django'` | ה-venv לא מופעל. הרץ `source venv/bin/activate` |
 | `Could not find a version that satisfies Django` | ה-venv נבנה עם Python ישן. חזור לשלב ד' |
@@ -121,7 +121,7 @@ python manage.py runserver
 בכל פעם שאתה פותח טרמינל חדש לעבודה על הפרויקט:
 
 ```bash
-cd ~/Desktop/Projects/hackeru-finalproject
+cd ~/django-blog
 source venv/bin/activate
 python manage.py runserver
 ```

@@ -2,8 +2,7 @@
 
 > דברים קטנים מהיום־יום — כסף, טיולים ותחביבים.
 
-בלוג מלא עם REST API מבוסס **Django REST Framework** וצד לקוח ב-**React**.
-פרויקט גמר.
+בלוג מגזין מלא: REST API מבוסס **Django REST Framework** וצד לקוח ב-**React**.
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)
@@ -31,66 +30,85 @@
 
 - Python 3.10+
 - PostgreSQL 14+
-- Node.js 18+ (לצד הלקוח, בשלבים מאוחרים יותר)
+- Node.js 18+ (עבור צד הלקוח)
 
 ---
 
 ## התקנה והרצה
 
-### 1. יצירת סביבה וירטואלית
+### 1. שכפול הפרויקט
 
 ```bash
-cd ~/Desktop/Projects/hackeru-finalproject
-python3 -m venv venv
-source venv/bin/activate
+git clone https://github.com/<OWNER>/django-blog.git
+cd django-blog
 ```
 
-לאחר ההפעלה תראה `(venv)` בתחילת שורת הטרמינל. **בכל פעם שתפתח טרמינל חדש תצטרך להריץ שוב את `source venv/bin/activate`.**
+### 2. יצירת סביבה וירטואלית
 
-### 2. התקנת החבילות
+```bash
+python3 -m venv venv
+source venv/bin/activate          # Windows:  venv\Scripts\activate
+```
+
+לאחר ההפעלה תראה `(venv)` בתחילת שורת הטרמינל. **בכל פתיחה של טרמינל חדש יש להריץ שוב את פקודת ההפעלה.**
+
+### 3. התקנת החבילות
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. יצירת מסד הנתונים ב-PostgreSQL
+### 4. יצירת מסד הנתונים ב-PostgreSQL
 
 ```bash
 createdb blog_db
 ```
 
-אם הפקודה לא מוכרת, ודא ש-PostgreSQL מותקן ורץ:
+אם הפקודה אינה מוכרת, ודא ש-PostgreSQL מותקן ורץ. לדוגמה ב-macOS עם Homebrew:
 
 ```bash
 brew install postgresql@16
 brew services start postgresql@16
 ```
 
-### 4. הגדרת משתני סביבה
+### 5. הגדרת משתני סביבה
 
-הקובץ `.env` כבר קיים. יש לוודא ש-`DB_USER` ו-`DB_PASSWORD` תואמים להתקנת PostgreSQL שלך.
+העתק את קובץ התבנית ומלא בו ערכים אמיתיים:
 
-בהתקנה דרך Homebrew ב-macOS, המשתמש הוא בדרך כלל שם המשתמש שלך במערכת וללא סיסמה:
-
-```
-DB_USER=omridigmi
-DB_PASSWORD=
+```bash
+cp .env.example .env
 ```
 
-### 5. הרצת מיגרציות
+יש להשלים ב-`.env`:
+
+| משתנה | הסבר |
+|---|---|
+| `SECRET_KEY` | מפתח אקראי וייחודי לפרויקט |
+| `DB_USER` | שם המשתמש שלך ב-PostgreSQL |
+| `DB_PASSWORD` | הסיסמה שלו (בהתקנת Homebrew לרוב ריקה) |
+
+ליצירת `SECRET_KEY` חדש:
+
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+> הקובץ `.env` מוחרג ב-`.gitignore` ואינו נכנס למאגר הקוד.
+
+### 6. הרצת מיגרציות
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 6. יצירת משתמש מנהל
+### 7. יצירת משתמש מנהל
 
 ```bash
 python manage.py createsuperuser
 ```
 
-### 7. הרצת השרת
+### 8. הרצת השרת
 
 ```bash
 python manage.py runserver
@@ -99,11 +117,11 @@ python manage.py runserver
 | כתובת | תיאור |
 |---|---|
 | http://127.0.0.1:8000/admin/ | ממשק הניהול |
-| http://127.0.0.1:8000/api/ | שורש ה-API (יתווסף בשלב 3) |
+| http://127.0.0.1:8000/api/ | שורש ה-API (Browsable API) |
 
 ---
 
-### 8. זריעת נתוני דמו
+## זריעת נתוני דמו
 
 ```bash
 python manage.py create_groups
@@ -117,6 +135,8 @@ python manage.py seed_db
 | `boss` | managers |
 | `editor1`, `editor2` | editors |
 | `dana`, `yossi`, `maya` | users |
+
+> נתוני דמו בלבד — אין להשתמש בהם בסביבת ייצור.
 
 ---
 
@@ -137,7 +157,7 @@ npm run dev
 ## מבנה הפרויקט
 
 ```
-biktana-blog/
+django-blog/
 ├── config/          הגדרות הפרויקט (settings, urls, שורש ה-API)
 ├── accounts/        משתמשים, הרשמה, קבוצות והרשאות
 │   └── management/commands/
@@ -150,7 +170,6 @@ biktana-blog/
 │       ├── context/     AuthContext
 │       ├── components/  Navbar, ArticleCard, SearchBar, CommentItem
 │       └── pages/       Home, ArticleDetail, Login, Register
-├── .env             סודות — לא נכנס ל-Git
 ├── .env.example     תבנית משתני סביבה
 └── requirements.txt
 ```
@@ -193,7 +212,23 @@ biktana-blog/
 
 ---
 
+## מחסנית טכנולוגית
+
+| שכבה | טכנולוגיה |
+|---|---|
+| שרת | Django 5.2, Django REST Framework 3.18 |
+| אימות | djangorestframework-simplejwt |
+| מסד נתונים | PostgreSQL |
+| סינון וחיפוש | django-filter |
+| ניהול סודות | python-decouple, python-dotenv |
+| CORS | django-cors-headers |
+| צד לקוח | React 18, Vite, axios |
+
+---
+
 ## אבטחה
 
-כל הסודות (`SECRET_KEY`, פרטי מסד הנתונים) נטענים מקובץ `.env` באמצעות `python-decouple`.
-הקובץ `.env` מוחרג ב-`.gitignore` ואינו נכנס למאגר הקוד.
+- כל הסודות (`SECRET_KEY`, פרטי מסד הנתונים) נטענים מקובץ `.env` באמצעות `python-decouple`, ואינם מקודדים בקוד.
+- הקובץ `.env` מוחרג ב-`.gitignore` ואינו נכנס למאגר הקוד.
+- ההרשאות נאכפות בשרת בכל נקודת קצה, ולא רק בממשק המשתמש.
+- לפני העלאה לייצור יש להגדיר `DEBUG=False` ולציין `ALLOWED_HOSTS` מפורש.

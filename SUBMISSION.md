@@ -44,7 +44,7 @@
 **טרמינל 1 — שרת:**
 
 ```bash
-cd ~/Desktop/Projects/hackeru-finalproject
+cd ~/django-blog
 source venv/bin/activate
 python manage.py runserver
 ```
@@ -52,7 +52,7 @@ python manage.py runserver
 **טרמינל 2 — צד לקוח:**
 
 ```bash
-cd ~/Desktop/Projects/hackeru-finalproject/frontend
+cd ~/django-blog/frontend
 npm run dev
 ```
 
