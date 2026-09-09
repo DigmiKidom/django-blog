@@ -103,9 +103,10 @@ export default function Home() {
     <div className="home">
       <section className="masthead">
         <p className="masthead__kicker">בלוג אישי</p>
-        <h1 className="masthead__title">דברים קטנים מהיום־יום</h1>
+        <h1 className="masthead__title">בקטנה</h1>
         <p className="masthead__sub">
-          כסף, טיולים ותחביבים — בקצרה, בלי יומרות, ומתוך ניסיון אישי.
+          דברים קטנים מהיום־יום — כסף, טיולים ותחביבים. בקצרה, בלי יומרות,
+          ומתוך ניסיון אישי.
         </p>
         <SearchBar value={search} onChange={setSearch} />
       </section>

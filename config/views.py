@@ -10,7 +10,7 @@ from rest_framework.reverse import reverse
 @permission_classes([AllowAny])
 def api_root(request, format=None):
     """
-    שורש ה-API של מערכת הבלוג.
+    שורש ה-API של "בקטנה" — מערכת בלוג מבוססת Django REST Framework.
 
     מכאן ניתן לנווט לכל נקודות הקצה ולבדוק אותן ישירות מהדפדפן.
 

@@ -34,7 +34,9 @@ export default function App() {
         </Routes>
       </main>
 
-      <footer className="footer">פרויקט גמר — מערכת בלוג מבוססת Django REST</footer>
+      <footer className="footer">
+        בקטנה · פרויקט גמר — Django REST Framework &amp; React
+      </footer>
     </>
   )
 }

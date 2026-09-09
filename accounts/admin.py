@@ -4,8 +4,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
 
 # כותרות ממשק הניהול
-admin.site.site_header = 'ניהול הבלוג'
-admin.site.site_title = 'ניהול הבלוג'
+admin.site.site_header = 'בקטנה · ניהול'
+admin.site.site_title = 'בקטנה'
 admin.site.index_title = 'ברוך הבא לממשק הניהול'
 
 

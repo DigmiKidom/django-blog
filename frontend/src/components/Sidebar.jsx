@@ -13,10 +13,10 @@ export default function Sidebar({ stats, tags, comments, onTagSelect }) {
   return (
     <aside className="sidebar">
       <section className="panel panel--about">
-        <h3 className="panel__title">על הבלוג</h3>
+        <h3 className="panel__title">על בקטנה</h3>
         <p className="panel__text">
           כתבות קצרות על כסף, טיולים ותחביבים. דברים קטנים מחיי היום־יום
-          שהתברר שכדאי לספר עליהם.
+          שהתברר שכדאי לספר עליהם — בקטנה, בלי להפוך את זה לעניין גדול.
         </p>
 
         {stats && (

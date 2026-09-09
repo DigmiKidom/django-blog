@@ -17,7 +17,7 @@ export default function Navbar() {
       <div className="navbar__inner">
         <Link to="/" className="navbar__brand">
           <span className="navbar__dot" />
-          הבלוג
+          בקטנה
         </Link>
 
         <nav className="navbar__links">

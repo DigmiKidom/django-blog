@@ -1,6 +1,29 @@
-# מערכת בלוג — פרויקט גמר
+# בקטנה
 
-REST API מבוסס Django REST Framework עם צד לקוח ב-React.
+> דברים קטנים מהיום־יום — כסף, טיולים ותחביבים.
+
+בלוג מלא עם REST API מבוסס **Django REST Framework** וצד לקוח ב-**React**.
+פרויקט גמר.
+
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)
+![DRF](https://img.shields.io/badge/DRF-3.18-A30000)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
+
+---
+
+## מה יש בפרויקט
+
+- **אימות JWT** — הרשמה, התחברות, חידוש טוקן אוטומטי והתנתקות
+- **שלוש קבוצות הרשאה** — משתמשים, עורכים וניהול, עם אכיפה מלאה בשרת
+- **ניהול כתבות** — יצירה, עריכה ומחיקה לפי בעלוּת
+- **תגובות** — כתיבה, עריכה ומחיקה לכותב; מנהל מסיר תוכן לא רצוי
+- **חיפוש בארבעה שדות** — כותרת, תוכן, תגיות ושם המחבר
+- **סינון מדויק** — לפי תגית, מחבר וטווח תאריכים (django-filter)
+- **פריסת מגזין** — כתבה ראשית, רשת כתבות וסרגל צד חי
+- **פרופיל אישי** — עריכת אימייל ותיאור, מונה כתבות ותגובות
+- **תיעוד אינטראקטיבי** — Browsable API של DRF
 
 ---
 
@@ -114,7 +137,7 @@ npm run dev
 ## מבנה הפרויקט
 
 ```
-hackeru-finalproject/
+biktana-blog/
 ├── config/          הגדרות הפרויקט (settings, urls, שורש ה-API)
 ├── accounts/        משתמשים, הרשמה, קבוצות והרשאות
 │   └── management/commands/
